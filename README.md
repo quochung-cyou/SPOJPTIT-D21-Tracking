@@ -35,8 +35,8 @@
 
 
 ## Demo image
-![](demo1.png)
-![](demo2.png)
+![](demo1.jpg)
+![](demo2.jpg)
 
 ## License Information
 
