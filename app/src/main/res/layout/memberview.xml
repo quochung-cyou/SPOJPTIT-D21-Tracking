@@ -8,9 +8,25 @@
     android:layout_height="wrap_content">
 
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:adjustViewBounds="true"
+            android:id="@+id/avatar"
+            android:src="@drawable/pro">
+        </ImageView>
+
 
     <TextView
         android:layout_width="match_parent"
@@ -20,10 +36,10 @@
         android:layout_marginTop="15dp"
         android:textStyle="bold"
         android:fontFamily="@font/montserratbold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="@id/avatar"
         android:textColor="#000000"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="66dp"
         android:textSize="16sp">
 
 
@@ -33,7 +49,7 @@
             android:layout_width="match_parent"
             android:id="@+id/problemcount"
             android:layout_height="match_parent"
-            android:text="15"
+            android:text="15 bài"
             android:fontFamily="@font/montserratsemibold"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"

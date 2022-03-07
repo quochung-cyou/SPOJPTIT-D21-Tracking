@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.quochung.spojproptit_d21.Model.Member;
 import com.quochung.spojproptit_d21.R;
 
@@ -35,8 +37,9 @@ public class ParseAdapter extends RecyclerView.Adapter<ParseAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ParseAdapter.ViewHolder holder, int position) {
         Member member = memberlist.get(position);
         holder.username.setText(member.getUsername());
-        holder.problemscount.setText(String.valueOf(member.getProblemamount()));
+        holder.problemscount.setText(member.getProblemamount() + " bài");
         holder.xephang.setText(member.getXephang());
+        Glide.with(context).load(member.getAvatarurl()).placeholder(R.drawable.pro).into(holder.avatar);
     }
 
     @Override
@@ -47,12 +50,14 @@ public class ParseAdapter extends RecyclerView.Adapter<ParseAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView username, problemscount, xephang;
+        ImageView avatar;
 
         public ViewHolder(@NonNull View view) {
             super(view);
             username = view.findViewById(R.id.username);
             problemscount = view.findViewById(R.id.problemcount);
             xephang = view.findViewById(R.id.xephang);
+            avatar = view.findViewById(R.id.avatar);
 
             view.setOnClickListener(this);
         }

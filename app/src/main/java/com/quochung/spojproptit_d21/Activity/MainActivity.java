@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -27,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView viewmemberlist;
     private TextView dem;
     private ArrayList<Member> memberlist = new ArrayList<>();
     private ParseAdapter parseadapter;
@@ -42,19 +42,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void demupdate(int x, int y) {
-        new Handler(Looper.getMainLooper()).post(new Runnable(){
-            @Override
-            public void run() {
-                dem.setText(x + "/" + y);
-            }
-        });
+        new Handler(Looper.getMainLooper()).post(() -> dem.setText(x + "/" + y));
 
     }
 
     private void init() {
         progressBar = findViewById(R.id.progressbar);
         dem = findViewById(R.id.dem);
-        viewmemberlist = findViewById(R.id.memberlist);
+        RecyclerView viewmemberlist = findViewById(R.id.memberlist);
         viewmemberlist.setHasFixedSize(true);
         viewmemberlist.setLayoutManager(new LinearLayoutManager(this));
         parseadapter = new ParseAdapter(memberlist, this);
@@ -109,7 +104,13 @@ public class MainActivity extends AppCompatActivity {
                     "proptit_nnaadd",
                     "linhmyx1512",
                     "danghan6623",
-                    "lordierclaw"
+                    "lordierclaw",
+                    "monkeydminh49",
+                    "ProPTIT_ZERO",
+                    "gacode93",
+                    "lew_203",
+                    "quynh_le909",
+                    "nguyetminh212",
             };
             int countxong = 0;
             for (String s : name) {
@@ -117,11 +118,12 @@ public class MainActivity extends AppCompatActivity {
                     String urls = url + s;
                     int count = 0;
                     Document data = Jsoup.connect(urls).get();
-                    String avatarurl = data.select("img-thumbnail")
-                            .select("img")
-                            .attr("src");
-                    Elements list1 = data.select("a[href]");
+                    String avatarurl = data.select(".img-thumbnail").attr("src");
+                    Elements list1 = data.select("td > a");
+                    //Log.d("DEBUG1", String.valueOf(list1.size()) + " " + avatarurl);
                     for (Element link : list1) {
+                        if (list1.isEmpty()) continue;
+                        //Log.d("DEBUG1", link.attr("href"));
                         if (link.attr("href").contains(s) && link.attr("href").contains("/PTIT/status/")) {
                             int index1 = String.valueOf(link).indexOf("/PTIT/status/");
                             int index2 = String.valueOf(link).indexOf(s);
@@ -129,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
                                 count++;
                             }
                         }
-
                     }
                     Member newmember = new Member(avatarurl, s, count);
                     memberlist.add(newmember);
