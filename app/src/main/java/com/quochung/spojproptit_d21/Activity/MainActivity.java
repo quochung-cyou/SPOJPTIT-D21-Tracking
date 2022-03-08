@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     "lew_203",
                     "quynh_le909",
                     "nguyetminh212",
+                    "team5_minhanh",
             };
             int countxong = 0;
             for (String s : name) {
@@ -119,7 +120,10 @@ public class MainActivity extends AppCompatActivity {
                     int count = 0;
                     Document data = Jsoup.connect(urls).get();
                     String avatarurl = data.select(".img-thumbnail").attr("src");
-                    Elements list1 = data.select("td > a");
+                    Element list = data.select("table.table-condensed").first();
+                    if (list == null) continue;
+                    Elements list1 = list.select("td > a");
+                    if (list1.isEmpty()) continue;
                     //Log.d("DEBUG1", String.valueOf(list1.size()) + " " + avatarurl);
                     for (Element link : list1) {
                         if (list1.isEmpty()) continue;
