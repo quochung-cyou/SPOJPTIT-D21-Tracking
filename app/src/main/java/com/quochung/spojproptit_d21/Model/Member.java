@@ -6,11 +6,21 @@ public class Member {
     private String username;
     private int problemamount;
     private String xephang;
+    private String realname;
 
-    public Member(String avatarurl, String username, int problemamount) {
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public Member(String avatarurl, String username, int problemamount, String realname) {
         this.avatarurl = avatarurl;
         this.username = username;
         this.problemamount = problemamount;
+        this.realname = realname;
     }
 
     public String getAvatarurl() {

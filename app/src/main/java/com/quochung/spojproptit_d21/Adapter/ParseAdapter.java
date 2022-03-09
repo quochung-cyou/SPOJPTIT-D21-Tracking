@@ -39,6 +39,7 @@ public class ParseAdapter extends RecyclerView.Adapter<ParseAdapter.ViewHolder> 
         holder.username.setText(member.getUsername());
         holder.problemscount.setText(member.getProblemamount() + " bài");
         holder.xephang.setText(member.getXephang());
+        holder.tenthat.setText(member.getRealname());
         Glide.with(context).load(member.getAvatarurl()).placeholder(R.drawable.pro).into(holder.avatar);
     }
 
@@ -49,7 +50,7 @@ public class ParseAdapter extends RecyclerView.Adapter<ParseAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView username, problemscount, xephang;
+        TextView username, problemscount, xephang, tenthat;
         ImageView avatar;
 
         public ViewHolder(@NonNull View view) {
@@ -58,6 +59,7 @@ public class ParseAdapter extends RecyclerView.Adapter<ParseAdapter.ViewHolder> 
             problemscount = view.findViewById(R.id.problemcount);
             xephang = view.findViewById(R.id.xephang);
             avatar = view.findViewById(R.id.avatar);
+            tenthat = view.findViewById(R.id.tenthat);
 
             view.setOnClickListener(this);
         }
