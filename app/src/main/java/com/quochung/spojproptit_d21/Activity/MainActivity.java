@@ -4,8 +4,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Member> memberlist = new ArrayList<>();
     private ParseAdapter parseadapter;
     private LottieAnimationView progressBar;
+    private RecyclerView viewmemberlist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void demupdate(int x, int y, String ten) {
         new Handler(Looper.getMainLooper()).post(() -> dem.setText(x + "/" + y + " - " + ten));
+
+        dem.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_in));
 
     }
 
@@ -65,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         sobaitop1 = findViewById(R.id.sobailamduoc);
         avatartop1 = findViewById(R.id.avatartop1);
         dem = findViewById(R.id.dem);
-        RecyclerView viewmemberlist = findViewById(R.id.memberlist);
+        viewmemberlist = findViewById(R.id.memberlist);
         viewmemberlist.setHasFixedSize(true);
         viewmemberlist.setLayoutManager(new LinearLayoutManager(this));
         parseadapter = new ParseAdapter(memberlist, this);
@@ -83,25 +86,44 @@ public class MainActivity extends AppCompatActivity {
             phantren.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             dem.setVisibility(View.VISIBLE);
-
             progressBar.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.slide_in_left));
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            progressBar.setVisibility(View.GONE);
-            dem.setVisibility(View.GONE);
-            phantren.setVisibility(View.VISIBLE);
-            progressBar.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.slide_out_right));
             Collections.sort(memberlist, (b, a) -> Integer.compare(a.getProblemamount(), b.getProblemamount()));
             int count = 1;
             for (Member member : memberlist) {
                 member.setXephang(String.valueOf(count));
                 count++;
             }
-            Log.d("DEBUG D21", memberlist.get(0).getUsername());
-            Log.d("DEBUG D21", String.valueOf(memberlist.get(0).getProblemamount()));
+            Animation anim;
+            anim = AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.slide_out_right);
+            anim.setDuration(800);
+            final Handler handler = new Handler();
+            progressBar.startAnimation(anim);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.setVisibility(View.GONE);
+                }
+            }, 800);
+
+            anim = AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.slide_out_right);
+
+            anim.setDuration(800);
+            dem.startAnimation(anim);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    dem.setVisibility(View.GONE);
+                }
+            }, 800);
+            phantren.setVisibility(View.VISIBLE);
+            anim = AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.slide_in_left);
+            anim.setDuration(500);
+            phantren.startAnimation(anim);
             updatetop1(memberlist.get(0).getAvatarurl(), memberlist.get(0).getUsername(), memberlist.get(0).getProblemamount());
             memberlist.remove(0);
             parseadapter.notifyDataSetChanged();
@@ -132,11 +154,12 @@ public class MainActivity extends AppCompatActivity {
                     "monkeydminh49",
                     "quocanh_2003",
                     "gacode93",
+                    "quanquyt",
                     "lew_203",
                     "quynh_le909",
                     "nguyetminh212",
                     "team5_minhanh",
-                    "team1_dthieu",
+                    "team1_dthieu"
             };
             String[] tenthat = new String[]{
                     "Lê Trí Tâm",
@@ -160,27 +183,35 @@ public class MainActivity extends AppCompatActivity {
                     "Nguyễn Đăng Minh",
                     "Hoàng Quốc Anh",
                     "Lê Anh Tuấn",
+                    "Trương Hải Quân",
                     "Lưu Minh Hiếu",
                     "Lê Như Quỳnh",
                     "Đặng Nguyệt Minh",
                     "Đàm Minh Anh",
-                    "Đặng Trung Hiếu",
+                    "Đặng Trung Hiếu"
             };
             int countxong = 0;
             for (int index = 0; index < name.length; index++) {
                 String s = name[index];
                 try {
-                    String urls = url + s;
+                    String urls = url + s  + "/";
                     int count = 0;
                     Document data = Jsoup.connect(urls).get();
                     String avatarurl = data.select(".img-thumbnail").attr("src");
                     Element list = data.select("table.table-condensed").first();
-                    if (list == null) continue;
+                    if (list == null) {
+                        Member newmember = new Member("https://picsum.photos/200", s, count, tenthat[index]);
+                        memberlist.add(newmember);
+                        continue;
+                    }
                     Elements list1 = list.select("td > a");
-                    if (list1.isEmpty()) continue;
+                    if (list1.isEmpty()) {
+                        Member newmember = new Member("https://picsum.photos/200", s, count, tenthat[index]);
+                        memberlist.add(newmember);
+                        continue;
+                    }
                     //Log.d("DEBUG1", String.valueOf(list1.size()) + " " + avatarurl);
                     for (Element link : list1) {
-                        if (list1.isEmpty()) continue;
                         //Log.d("DEBUG1", link.attr("href"));
                         if (link.attr("href").contains(s) && link.attr("href").contains("/PTIT/status/")) {
                             int index1 = String.valueOf(link).indexOf("/PTIT/status/");

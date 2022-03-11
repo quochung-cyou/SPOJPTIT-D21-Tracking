@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ public class ParseAdapter extends RecyclerView.Adapter<ParseAdapter.ViewHolder> 
 
     private ArrayList<Member> memberlist;
     private Context context;
+    private int lastpos = -1;
 
     public ParseAdapter(ArrayList<Member> memberlist, Context context) {
         this.memberlist = memberlist;
@@ -41,6 +44,8 @@ public class ParseAdapter extends RecyclerView.Adapter<ParseAdapter.ViewHolder> 
         holder.xephang.setText(member.getXephang());
         holder.tenthat.setText(member.getRealname());
         Glide.with(context).load(member.getAvatarurl()).placeholder(R.drawable.pro).into(holder.avatar);
+        Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), android.R.anim.slide_in_left);
+        holder.itemView.startAnimation(animation);
     }
 
     @Override
