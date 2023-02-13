@@ -7,7 +7,7 @@
 
 ## Description
 
-* Simple android app that scrape data from SPOJ/PTIT for d21 proptit club
+* SPOJ-RankTracker - This app lets you keep track of your and your opponents' rankings throughout the competition. With a modern and elegant UI, this app ensures fast and smooth interface for optimal performance
 
 ### Prerequisites
 
