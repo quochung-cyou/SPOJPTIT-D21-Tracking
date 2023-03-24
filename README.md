@@ -3,7 +3,7 @@
 * Compiled Demo: https://github.com/quochung-cyou/SPOJPTIT-D21-Tracking/releases
 ## Author
 
-* quochungvn
+* quochungcyou
 
 ## Description
 
