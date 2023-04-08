@@ -1,7 +1,7 @@
 # SPOJPTIT-D21-Tracking
 
 * Compiled Demo: https://github.com/quochung-cyou/SPOJPTIT-D21-Tracking/releases
-Checkout web version here (Faster): https://github.com/quochung-cyou/SPOJTracker-SpringBoot
+* Checkout web version here (Faster): https://github.com/quochung-cyou/SPOJTracker-SpringBoot
 
 
 ## Author
